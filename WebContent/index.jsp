@@ -5,8 +5,13 @@
 <title>REVIEW</title>
 </head>
 <body>
+<%
+	response.sendRedirect("main.jsp");
+%>
+	<!--  
 	<script type="text/javascript">
 		location.href = "login.jsp";
 	</script>
+	-->
 </body>
 </html>
