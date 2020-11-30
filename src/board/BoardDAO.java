@@ -6,15 +6,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import property.CustomProperty;
+
 public class BoardDAO {
+	private CustomProperty prop;
 	private Connection conn;
 	private ResultSet rs;
 	
 	public BoardDAO() {
 		try {
-			String dbURL = "jdbc:mysql://localhost:3306/BBS?serverTimezone=UTC";
-			String dbID = "root";
-			String dbPassword = "hwpark";
+			String dbname = prop.getCustomProperty().getDbName();
+			String dbID = prop.getCustomProperty().getUserName();
+			String dbPassword = prop.getCustomProperty().getUserPassword();
+			String dbURL = "jdbc:mysql://localhost:3306/"+ dbname +"?serverTimezone=UTC";
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
@@ -91,7 +95,7 @@ public class BoardDAO {
 		return list;
 	}
 	
-	public boolean nextPage(int pageNumber) {
+	public boolean hasNextPage(int pageNumber) {
 		String SQL = "select * from bbs where bbsID < ? and bbsAvailable = 1 order by bbsID desc limit 10";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -106,11 +110,11 @@ public class BoardDAO {
 		return false;
 	}
 	
-	public Board getBbs(int bbsID) {
+	public Board getBbs(int id) {
 		String SQL = "select * from bbs where bbsID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, bbsID);
+			pstmt.setInt(1, id);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				Board bbs = new Board();
@@ -128,13 +132,13 @@ public class BoardDAO {
 		return null;
 	}
 	
-	public int update(int bbsID, String bbsTitle, String bbsContent) {
+	public int update(int id, String title, String content) {
 		String SQL = "update bbs set bbsTitle = ?, bbsContent = ? where bbsID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, bbsTitle);
-			pstmt.setString(2, bbsContent);
-			pstmt.setInt(3, bbsID);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, id);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

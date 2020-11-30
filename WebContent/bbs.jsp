@@ -85,9 +85,9 @@ a, a:hover {
 				</thead>
 				<tbody>
 					<%
-						BoardDAO bbsDAO = new BoardDAO();
-					ArrayList<Board> list = bbsDAO.getList(pageNumber);
-					for (int i = 0; i < list.size(); i++) {
+						BoardDAO boardDAO = new BoardDAO();
+						ArrayList<Board> list = boardDAO.getList(pageNumber);
+						for (int i = 0; i < list.size(); i++) {
 					%>
 					<tr>
 						<td><%=list.get(i).getBbsID()%></td>
@@ -107,7 +107,7 @@ a, a:hover {
 				<%=pageNumber - 1%>" class="btn btn-success btn-arrow-left">이전</a>
 			<%
 				}
-			if (bbsDAO.nextPage(pageNumber + 1)) {
+				if (boardDAO.hasNextPage(pageNumber + 1)) {
 			%>
 			<a href="bbs.jsp?pageNumber="
 				<%=pageNumber + 1%>" class="btn btn-success btn-arrow-right">다음</a>
