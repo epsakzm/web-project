@@ -7,7 +7,30 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/bootstrap.css">
-<title>Insert title here</title>
+<link rel="stylesheet" href="css/custom.css">
+<style>
+.btn-lg {
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 30px;
+}
+</style>
+<script>
+	$("#signin").on("click", function() {
+		$('#myModal1').modal('hide');
+	});
+	//trigger next modal
+	$("#signin").on("click", function() {
+		$('#myModal2').modal('show');
+	});
+	function sub() {
+		document.form1.submit();
+	}
+</script>
+<title>게시글 조회</title>
 </head>
 <body>
 	<%
@@ -16,62 +39,32 @@
 		if (session.getAttribute("userID") != null) {
 			userID = (String) session.getAttribute("userID");
 		}
-		int bbsID = 0;
-		if (request.getParameter("bbsID") != null) {
-			bbsID = Integer.parseInt(request.getParameter("bbsID"));
+		int boardID = -1;
+		if (request.getParameter("boardID") != null) {
+			boardID = Integer.parseInt(request.getParameter("boardID"));
 		}
-		if (bbsID == 0) {
+		if (boardID == -1) {
 			script.println("<script>");
 			script.println("alert('유효하지 않은 글입니다.')");
-			script.println("location.href='bbs.jsp'");
-			script.println("<script>");
+			script.println("location.href='board.jsp'");
+			script.println("</script>");
 		}
-		Board bbs = new BoardDAO().getBbs(bbsID);
+		Board board = new BoardDAO().getBbs(boardID);
+		System.out.println(">>>>>>>>>>>>" + userID + " / " + board.getUserID());
+		if (userID == null) {
+			script.println("<script>");
+			script.println("alert('로그인이 필요합니다.')");
+			script.println("location.href='board.jsp'");
+			script.println("</script>");
+		}
+		if (!userID.equals(board.getUserID())) {
+			script.println("<script>");
+			script.println("alert('권한이 없습니다.')");
+			script.println("location.href='board.jsp'");
+			script.println("</script>");
+		}
 	%>
-	<nav class="navbar navbar-default">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-				aria-expanded="false">
-				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="main.jsp">JSP 게시판 웹 사이트</a>
-		</div>
-		<div class="collapse navbar-collapse"
-			id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li><a href="main.jsp">메인</a></li>
-				<li class="active"><a href="bbs.jsp">게시판</a></li>
-			</ul>
-			<%
-				if (userID == null) {
-			%>
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">접속하기<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="login.jsp">로그인</a></li>
-						<li><a href="join.jsp">회원가입</a></li>
-					</ul></li>
-			</ul>
-			<%
-				} else {
-			%>
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">회원관리<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="logoutAction.jsp">로그아웃</a></li>
-					</ul></li>
-			</ul>
-			<%
-				}
-			%>
-		</div>
-	</nav>
+	<jsp:include page="navbar.jsp"></jsp:include>
 	<div class="container">
 		<div class="row">
 			<table class="table table-striped"
@@ -79,40 +72,87 @@
 				<thead>
 					<tr>
 						<th colspan="3"
-							style="background-color: #eeeeee; text-align: center;">게시판 글
-							보기</th>
+							style="background-color: #eeeeee; text-align: center;">게시판</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td style="width: 20%;">글 제목</td>
-						<td colspan="2"><%=bbs.getBbsTitle()%></td>
+						<td colspan="2"><%=board.getBoardTitle()%></td>
 					</tr>
 					<tr>
 						<td>작성자</td>
-						<td colspan="2"><%=bbs.getUserID()%></td>
+						<td colspan="2"><%=board.getUserID()%></td>
 					</tr>
 					<tr>
 						<td>작성 일자</td>
-						<td colspan="2"><%=bbs.getBbsDate()%></td>
+						<td colspan="2"><%=board.getCreatedDate()%></td>
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td colspan="2" style="min-height: 200px; text-align: left;"><%=bbs.getBbsContent()%></td>
+						<td colspan="2" style="min-height: 200px; text-align: left;"><%=board.getBoardContent()%></td>
 					</tr>
 				</tbody>
 			</table>
-			<a href="bbs.jsp" class="btn btn-primary">목록</a>
+			<a href="board.jsp" class="btn btn-primary">목록</a>
 			<%
-				if(userID != null && userID.equals(bbs.getUserID())) {
+				if (userID != null && userID.equals(board.getUserID())) {
 			%>
-					<a href="update.jsp?bbsID=<%=bbsID%>" class="btn btn-primary">수정</a>
-					<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="deleteAction.jsp?bbsID=<%=bbsID%>" class="btn btn-primary">삭제</a>
+			<button class="btn btn-black" data-toggle="modal"
+				data-target="#myModal1">수정</button>
+			<a onclick="return confirm('정말로 삭제하시겠습니까?')"
+				href="processDelete.jsp?boardID=<%=boardID%>"
+				class="btn btn-primary">삭제</a>
 			<%
-					}
+				}
 			%>
 		</div>
 	</div>
+
+	<div class="modal fade" id="myModal1" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+
+					<h4 class="modal-title" id="myModalLabel">Modal 1</h4>
+				</div>
+				<div class="modal-body">
+					<form name="form1"
+						action='./processUpdate.jsp?boardID=<%=boardID%>' method="post">
+						<div class="form-group">
+							<label for="title">제목</label> <input id="title1"
+								value="<%=board.getBoardTitle()%>" type="text"
+								class="form-control" name="boardTitle" placeholder="title">
+						</div>
+						<div class="form-group">
+							<label for="user">작성자</label> <input id="user"
+								value="<%=board.getUserID()%>" type="text" class="form-control"
+								name="boardTitle" placeholder="title" readonly>
+						</div>
+						<div class="form-group">
+							<label for="date">게시일</label> <input id="date"
+								value="<%=board.getCreatedDate()%>" type="text"
+								class="form-control" name="boardTitle" placeholder="title"
+								readonly>
+						</div>
+						<div class="form-group">
+							<label for="content">내용</label>
+							<textarea id="content1" class="form-control" name="boardContent"
+								placeholder="content"><%=board.getBoardContent()%></textarea>
+						</div>
+						<div class="modal-footer">
+							<button type="button" onclick="sub()" class="btn btn-black"
+								id="signin">수정</button>
+							<button type="button" class="btn btn-outline-black"
+								data-dismiss="modal">Close</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script type="text/javascript"
 		src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>

@@ -5,6 +5,9 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
+<jsp:useBean id="board" class="board.Board" scope="page"></jsp:useBean>
+<jsp:setProperty property="boardTitle" name="board" />
+<jsp:setProperty property="boardContent" name="board" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,41 +25,23 @@
 			script.println("alert('로그인을 하세요.')");
 			script.println("location.href='login.jsp'");
 			script.println("<script>");
-		} 
-		int bbsID = 0;
-		if (request.getParameter("bbsID") != null) {
-			bbsID = Integer.parseInt(request.getParameter("bbsID"));
-		}
-		if (bbsID == 0) {
-			script.println("<script>");
-			script.println("alert('유효하지 않은 글입니다.')");
-			script.println("location.href='bbs.jsp'");
-			script.println("<script>");
-		}
-		Board bbs = new BoardDAO().getBbs(bbsID);
-		if(!userID.equals(bbs.getUserID())) {
-			script.println("<script>");
-			script.println("alert('권한이 없습니다.')");
-			script.println("location.href='bbs.jsp'");
-			script.println("<script>");
 		} else {
-			if (request.getParameter("bbsTitle") == null || request.getParameter("bbsContent") == null ||
-		request.getParameter("bbsTitle").equals("") || request.getParameter("bbsContent").equals("")) {
+			if (board.getBoardTitle() == null || board.getBoardContent() == null) {
 		script.println("<script>");
 		script.println("alert('입력이 안 된 사항이 있습니다.')");
 		script.println("history.back()");
 		script.println("<script>");
 			} else {
-		BoardDAO bbsDAO = new BoardDAO();
-		int result = bbsDAO.update(bbsID, request.getParameter("bbsTitle"), request.getParameter("bbsContent"));
+		BoardDAO boardDAO = new BoardDAO();
+		int result = boardDAO.write(board.getBoardTitle(), userID, board.getBoardContent());
 		if (result == -1) {
 			script.println("<script>");
-			script.println("alert('글 수정에 실패했습니다.')");
+			script.println("alert('글쓰기에 실패했습니다.')");
 			script.println("history.back()");
 			script.println("<script>");
 		} else {
 			script.println("<script>");
-			script.println("location.href = 'bbs.jsp'");
+			script.println("location.href = 'board.jsp'");
 			script.println("</script>");
 		}
 			}

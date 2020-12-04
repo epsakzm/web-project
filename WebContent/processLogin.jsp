@@ -26,7 +26,9 @@
 			script.println("<script>");
 		}
 		UserDAO userDAO = new UserDAO();
-		int result = userDAO.login(user.getUserID(), user.getUserPassword());
+		String id = request.getParameter("userID");
+		String pass = request.getParameter("userPassword");
+		int result = userDAO.login(id, pass);
 		if (result == 1) {
 			session.setAttribute("userID", user.getUserID());
 			script.println("<script>");

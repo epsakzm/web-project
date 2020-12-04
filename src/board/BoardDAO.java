@@ -6,32 +6,29 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import property.CustomProperty;
-
 public class BoardDAO {
-	private CustomProperty prop;
+
 	private Connection conn;
 	private ResultSet rs;
-	
+
 	public BoardDAO() {
 		try {
-			String dbname = prop.getCustomProperty().getDbName();
-			String dbID = prop.getCustomProperty().getUserName();
-			String dbPassword = prop.getCustomProperty().getUserPassword();
-			String dbURL = "jdbc:mysql://localhost:3306/"+ dbname +"?serverTimezone=UTC";
+			String dbID = "root";
+			String dbPassword = "hwpark";
+			String dbURL = "jdbc:mysql://localhost:3306/board?serverTimezone=UTC";
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String getDate() {
 		String SQL = "select now()";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				return rs.getString(1);
 			}
 		} catch (Exception e) {
@@ -39,13 +36,13 @@ public class BoardDAO {
 		}
 		return "";
 	}
-	
-	public int getNext() {
-		String SQL = "select bbsID from bbs order by bbsid desc";
+
+	public int getNextPage() {
+		String SQL = "select boardID from board order by boardid desc";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				return rs.getInt(1) + 1;
 			}
 			return 1;
@@ -54,16 +51,16 @@ public class BoardDAO {
 		}
 		return -1;
 	}
-	
-	public int write(String bbsTitle, String userID, String bbsContent) {
-		String SQL = "insert into bbs values (?, ?, ?, ?, ?, ?)";
+
+	public int write(String boardTitle, String userID, String boardContent) {
+		String SQL = "insert into board values (?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext());
-			pstmt.setString(2, bbsTitle);
+			pstmt.setInt(1, getNextPage());
+			pstmt.setString(2, boardTitle);
 			pstmt.setString(3, userID);
 			pstmt.setString(4, getDate());
-			pstmt.setString(5, bbsContent);
+			pstmt.setString(5, boardContent);
 			pstmt.setInt(6, 1);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -71,35 +68,35 @@ public class BoardDAO {
 		}
 		return -1;
 	}
-	
+
 	public ArrayList<Board> getList(int pageNumber) {
-		String SQL = "select * from bbs where bbsID < ? and bbsAvailable = 1 order by bbsID desc limit 10";
+		String SQL = "select * from board where boardID < ? and isAvailable = 1 order by boardID desc limit 10";
 		ArrayList<Board> list = new ArrayList<Board>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
+			pstmt.setInt(1, getNextPage() - (pageNumber - 1) * 10);
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				Board bbs = new Board();
-				bbs.setBbsID(rs.getInt(1));
-				bbs.setBbsTitle(rs.getString(2));
-				bbs.setUserID(rs.getString(3));
-				bbs.setBbsDate(rs.getString(4));
-				bbs.setBbsContent(rs.getString(5));
-				bbs.setBbsAvailable(rs.getInt(6));
-				list.add(bbs);
+			while (rs.next()) {
+				Board board = new Board();
+				board.setBoardID(rs.getInt(1));
+				board.setBoardTitle(rs.getString(2));
+				board.setUserID(rs.getString(3));
+				board.setCreatedDate(rs.getString(4));
+				board.setBoardContent(rs.getString(5));
+				board.setIsAvailable(rs.getInt(6));
+				list.add(board);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return list;
 	}
-	
+
 	public boolean hasNextPage(int pageNumber) {
-		String SQL = "select * from bbs where bbsID < ? and bbsAvailable = 1 order by bbsID desc limit 10";
+		String SQL = "select * from board where boardID < ? and isAvailable = 1 order by boardID desc limit 10";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
+			pstmt.setInt(1, getNextPage() - (pageNumber - 1) * 10);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				return true;
@@ -109,31 +106,31 @@ public class BoardDAO {
 		}
 		return false;
 	}
-	
+
 	public Board getBbs(int id) {
-		String SQL = "select * from bbs where bbsID = ?";
+		String SQL = "select * from board where boardID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, id);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				Board bbs = new Board();
-				bbs.setBbsID(rs.getInt(1));
-				bbs.setBbsTitle(rs.getString(2));
-				bbs.setUserID(rs.getString(3));
-				bbs.setBbsDate(rs.getString(4));
-				bbs.setBbsContent(rs.getString(5));
-				bbs.setBbsAvailable(rs.getInt(6));
-				return bbs;
+				Board board = new Board();
+				board.setBoardID(rs.getInt(1));
+				board.setBoardTitle(rs.getString(2));
+				board.setUserID(rs.getString(3));
+				board.setCreatedDate(rs.getString(4));
+				board.setBoardContent(rs.getString(5));
+				board.setIsAvailable(rs.getInt(6));
+				return board;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	public int update(int id, String title, String content) {
-		String SQL = "update bbs set bbsTitle = ?, bbsContent = ? where bbsID = ?";
+		String SQL = "update board set boardTitle = ?, boardContent = ? where boardID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, title);
@@ -145,12 +142,12 @@ public class BoardDAO {
 		}
 		return -1;
 	}
-	
-	public int delete(int bbsID) {
-		String SQL = "update bbs set bbsAvailable = 0 where bbsID = ?";
+
+	public int delete(int boardID) {
+		String SQL = "update board set isAvailable = 0 where boardID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, bbsID);
+			pstmt.setInt(1, boardID);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

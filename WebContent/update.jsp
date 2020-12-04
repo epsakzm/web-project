@@ -7,6 +7,13 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/custom.css">
+<style>
+ td {
+	padding-top: 50px;
+	
+}
+</style>
 <title>Insert title here</title>
 </head>
 <body>
@@ -20,73 +27,48 @@
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다.')");
 			script.println("location.href='login.jsp'");
-			script.println("<script>");
+			script.println("</script>");
 		}
-		int bbsID = 0;
-		if (request.getParameter("bbsID") != null) {
-			bbsID = Integer.parseInt(request.getParameter("bbsID"));
+		int boardID = 0;
+		if (request.getParameter("boardID") != null) {
+			boardID = Integer.parseInt(request.getParameter("boardID"));
 		}
-		if (bbsID == 0) {
+		if (boardID == 0) {
 			script.println("<script>");
 			script.println("alert('유효하지 않은 글입니다.')");
-			script.println("location.href='bbs.jsp'");
-			script.println("<script>");
+			script.println("location.href='board.jsp'");
+			script.println("</script>");
 		}
-		Board bbs = new BoardDAO().getBbs(bbsID);
-		if(!userID.equals(bbs.getUserID())) {
+		Board board = new BoardDAO().getBbs(boardID);
+		if(!userID.equals(board.getUserID())) {
 			script.println("<script>");
 			script.println("alert('권한이 없습니다.')");
-			script.println("location.href='bbs.jsp'");
-			script.println("<script>");
+			script.println("location.href='board.jsp'");
+			script.println("</script>");
 		}
 	%>
-	<nav class="navbar navbar-default">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-				aria-expanded="false">
-				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="main.jsp">JSP 게시판 웹 사이트</a>
-		</div>
-		<div class="collapse navbar-collapse"
-			id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li><a href="main.jsp">메인</a></li>
-				<li class="active"><a href="bbs.jsp">게시판</a></li>
-			</ul>
-
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">회원관리<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="logoutAction.jsp">로그아웃</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-	</nav>
+	<jsp:include page="navbar.jsp"></jsp:include>
 	<div class="container">
 		<div class="row">
-			<form action="updateAction.jsp?bbsID=<%=bbsID %>" method="post">
+			<form action="processUpdate.jsp?boardID=<%=boardID %>" method="post">
 				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 				<thead>
 					<tr>
-						<th colspan="2" style="background-color: #eeeeee; text-align: center;">게시판 글 수정 양식</th>
+						<th colspan="2" style="background-color: #eeeeee; text-align: center;">글 수정</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td><input type="text" class="form-control" placeholder="글 제목" name="bbsTitle" maxlength="50" ><%=bbs.getBbsTitle() %></td>
+						<td><span class="label label-default">글 제목</span></td>
+						<td><input type="text" class="form-control" placeholder="글 제목" name="boardTitle" maxlength="50" ><%=board.getBoardTitle()%></td>
 					</tr>
 					<tr>
-						<td><textarea class="form-control" placeholder="글 내용" name="bbsContent" maxlength="2048" style="height: 350px;" ><%=bbs.getBbsContent() %></textarea></td>
+						<td>asdfaaaaaaaaaaaaaaaaa</td>
+						<td><span class="label label-dafault">글 내용</span><textarea class="form-control" placeholder="글 내용" name="boardContent" maxlength="2048" style="height: 350px;" ><%=board.getBoardContent()%></textarea></td>
 					</tr>
 				</tbody>
 			</table>
-			<input type="submit" class="btn btn-primary pull-right" value="글수정" />
+			<input type="submit" class="btn btn-dark pull-right" value="글수정" />
 			</form>
 		</div>
 	</div>

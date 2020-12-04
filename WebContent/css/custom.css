@@ -1,8 +1,176 @@
-@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
-@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+@import
+	url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap')
+	;
+
 * {
-	font-family : 'Nanum Gothic';
+	font-family: 'Open Sans', sans-serif;
 }
-h1 {
-	font-family : 'Hanna';
+
+a:hover {
+	color: #c7e8f0;
+}
+
+.btn-outline-dark {
+	color: #343a40;
+	border-color: #343a40
+}
+
+.btn-outline-dark:hover {
+	color: #fff;
+	background-color: #343a40;
+	border-color: #343a40
+}
+
+.btn-outline-dark.focus, .btn-outline-dark:focus {
+	box-shadow: 0 0 0 .2rem rgba(52, 58, 64, .5)
+}
+
+.btn-outline-dark.disabled, .btn-outline-dark:disabled {
+	color: #343a40;
+	background-color: transparent
+}
+
+.btn-outline-dark:not (:disabled ):not (.disabled ).active,
+	.btn-outline-dark:not (:disabled ):not (.disabled ):active, .show>.btn-outline-dark.dropdown-toggle
+	{
+	color: #fff;
+	background-color: #343a40;
+	border-color: #343a40
+}
+
+.btn-outline-dark:not (:disabled ):not (.disabled ).active:focus,
+	.btn-outline-dark:not (:disabled ):not (.disabled ):active:focus, .show>.btn-outline-dark.dropdown-toggle:focus
+	{
+	box-shadow: 0 0 0 .2rem rgba(52, 58, 64, .5)
+}
+
+.modal-login {
+	color: #000000;
+	width: 350px;
+	margin: 80px auto 0;
+}
+
+.modal-login .modal-content {
+	padding: 20px;
+	border-radius: 5px;
+	border: none;
+}
+
+.modal-login .modal-header {
+	border-bottom: none;
+	position: relative;
+	justify-content: center;
+}
+
+.modal-login h4 {
+	text-align: center;
+	font-size: 26px;
+	margin: 30px 0 -15px;
+}
+
+.modal-login .form-control:focus {
+	border-color: #000000;
+}
+
+.modal-login .form-control, .modal-login .btn {
+	min-height: 40px;
+	border-radius: 3px;
+}
+
+.modal-login .close {
+	position: absolute;
+	top: -5px;
+	right: -5px;
+}
+
+.modal-login .modal-footer {
+	background: #000000;
+	border-color: #000000;
+	text-align: center;
+	justify-content: center;
+	margin: 0 -20px -20px;
+	border-radius: 5px;
+	font-size: 13px;
+}
+
+.modal-login .modal-footer a {
+	color: #999;
+}
+
+.modal-login .avatar {
+	position: absolute;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	top: -70px;
+	width: 95px;
+	height: 95px;
+	border-radius: 50%;
+	z-index: 9;
+	background: #000000;
+	padding: 15px;
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.modal-login .avatar img {
+	width: 100%;
+}
+
+.modal-login .btn {
+	color: #000000;
+	border-radius: 4px;
+	background: #eeeeee;
+	text-decoration: none;
+	transition: all 0.4s;
+	line-height: normal;
+	border: none;
+}
+
+.modal-login .btn:hover, .modal-login .btn:focus {
+	background: #000000;
+	color: #ffffff;
+	outline: none;
+}
+
+.trigger-btn {
+	display: inline-block;
+	margin: 100px auto;
+}
+
+.btn-dark {
+	color: #fff;
+	background-color: #343a40;
+	border-color: #343a40
+}
+
+.btn-dark:hover {
+	color: #fff;
+	background-color: #23272b;
+	border-color: #1d2124
+}
+
+.btn-dark.focus, .btn-dark:focus {
+	color: #fff;
+	background-color: #23272b;
+	border-color: #1d2124;
+	box-shadow: 0 0 0 .2rem rgba(82, 88, 93, .5)
+}
+
+.btn-dark.disabled, .btn-dark:disabled {
+	color: #fff;
+	background-color: #343a40;
+	border-color: #343a40
+}
+
+.btn-dark:not (:disabled ):not (.disabled ).active, .btn-dark:not (:disabled
+	):not (.disabled ):active, .show>.btn-dark.dropdown-toggle {
+	color: #fff;
+	background-color: #1d2124;
+	border-color: #171a1d
+}
+
+.btn-dark:not (:disabled ):not (.disabled ).active:focus, .btn-dark:not
+	(:disabled ):not (.disabled ):active:focus, .show>.btn-dark.dropdown-toggle:focus
+	{
+	box-shadow: 0 0 0 .2rem rgba(82, 88, 93, .5)
 }

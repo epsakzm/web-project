@@ -23,34 +23,34 @@
 			script.println("location.href='login.jsp'");
 			script.println("<script>");
 		} 
-		int bbsID = 0;
-		if (request.getParameter("bbsID") != null) {
-			bbsID = Integer.parseInt(request.getParameter("bbsID"));
+		int boardID = 0;
+		if (request.getParameter("boardID") != null) {
+			boardID = Integer.parseInt(request.getParameter("boardID"));
 		}
-		if (bbsID == 0) {
+		if (boardID == 0) {
 			script.println("<script>");
 			script.println("alert('유효하지 않은 글입니다.')");
-			script.println("location.href='bbs.jsp'");
+			script.println("location.href='board.jsp'");
 			script.println("<script>");
 		}
-		Board bbs = new BoardDAO().getBbs(bbsID);
-		if(!userID.equals(bbs.getUserID())) {
+		Board board = new BoardDAO().getBbs(boardID);
+		if(!userID.equals(board.getUserID())) {
 			script.println("<script>");
 			script.println("alert('권한이 없습니다.')");
-			script.println("location.href='bbs.jsp'");
+			script.println("location.href='board.jsp'");
 			script.println("<script>");
 		} else {
-			BoardDAO bbsDAO = new BoardDAO();
-			int result = bbsDAO.delete(bbsID);
+			BoardDAO boardDAO = new BoardDAO();
+			int result = boardDAO.delete(boardID);
 			if (result == -1) {
-		script.println("<script>");
-		script.println("alert('글 삭제에 실패했습니다.')");
-		script.println("history.back()");
-		script.println("<script>");
+				script.println("<script>");
+				script.println("alert('글 삭제에 실패했습니다.')");
+				script.println("history.back()");
+				script.println("<script>");
 			} else {
-		script.println("<script>");
-		script.println("location.href = 'bbs.jsp'");
-		script.println("</script>");
+				script.println("<script>");
+				script.println("location.href = 'board.jsp'");
+				script.println("</script>");
 			}
 		}
 	%>
