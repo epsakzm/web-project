@@ -18,7 +18,7 @@
 	<div class="container">
 		<div class="jumbotron">
 			<div class="container">
-				<h2>개인 블로그</h2>
+				<h2>cafe24</h2>
 				<p><a class="label label-default" href="board.jsp" role="button">글 쓰러 가기!</a></p>
 			</div>
 		</div>
@@ -46,9 +46,8 @@
           <div class="portfolio-info">
             <h3>Project information</h3>
             <ul>
-              <li><strong>Category</strong>: Web design</li>
-              <li><strong>Client</strong>: ASU Company</li>
-              <li><strong>Project date</strong>: 01 March, 2020</li>
+              <li><strong>Category</strong>: WEB</li>
+              <li><strong>Project date</strong>: 2020 - 2</li>
             </ul>
           </div>
         </div>

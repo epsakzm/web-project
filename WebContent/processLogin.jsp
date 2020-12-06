@@ -20,10 +20,8 @@
 			userID = (String) session.getAttribute("userID");
 		}
 		if(userID != null) {
-			script.println("<script>");
-			script.println("alert('이미 로그인 되어 있습니다.')");
-			script.println("location.href='main.jsp'");
-			script.println("<script>");
+			script.println("<script>alert('이미 로그인 되어 있습니다.')</script>");
+			response.sendRedirect("main.jsp");
 		}
 		UserDAO userDAO = new UserDAO();
 		String id = request.getParameter("userID");
@@ -31,25 +29,14 @@
 		int result = userDAO.login(id, pass);
 		if (result == 1) {
 			session.setAttribute("userID", user.getUserID());
-			script.println("<script>");
-			script.println("location.href = 'main.jsp'");
-			script.println("</script>");
 		} else if (result == 0) {
-			script.println("<script>");
-			script.println("alert('비밀번호가 틀립니다.')");
-			script.println("history.back()");
-			script.println("</script>");
+			script.println("<script>alert('비밀번호가 틀립니다.')</script>");
 		} else if (result == -1) {
-			script.println("<script>");
-			script.println("alert('존재하지 않는 아이디입니다.')");
-			script.println("history.back()");
-			script.println("</script>");
+			script.println("<script>alert('존재하지 않는 아이디입니다.')</script>");
 		} else if (result == -2) {
-			script.println("<script>");
-			script.println("alert('데이터베이스 오류가 발생했습니다.')");
-			script.println("history.back()");
-			script.println("</script>");
+			script.println("<script>alert('DB오류')</script>");
 		}
+		response.sendRedirect("board.jsp");
 	%>
 </body>
 </html>

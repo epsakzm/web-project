@@ -21,31 +21,20 @@
 			userID = (String) session.getAttribute("userID");
 		}
 		if (userID == null) {
-			script.println("<script>");
-			script.println("alert('로그인을 하세요.')");
-			script.println("location.href='login.jsp'");
+			script.println("<script>alert('로그인을 하세요.')</script>");
 			script.println("<script>");
 		} else {
 			if (board.getBoardTitle() == null || board.getBoardContent() == null) {
-		script.println("<script>");
-		script.println("alert('입력이 안 된 사항이 있습니다.')");
-		script.println("history.back()");
-		script.println("<script>");
+				script.println("<script>alert('입력이 안 된 사항이 있습니다.')</script>");
 			} else {
-		BoardDAO boardDAO = new BoardDAO();
-		int result = boardDAO.write(board.getBoardTitle(), userID, board.getBoardContent());
-		if (result == -1) {
-			script.println("<script>");
-			script.println("alert('글쓰기에 실패했습니다.')");
-			script.println("history.back()");
-			script.println("<script>");
-		} else {
-			script.println("<script>");
-			script.println("location.href = 'board.jsp'");
-			script.println("</script>");
-		}
+				BoardDAO boardDAO = new BoardDAO();
+				int result = boardDAO.write(board.getBoardTitle(), userID, board.getBoardContent());
+				if (result == -1) {
+					script.println("<script>alert('글쓰기에 실패했습니다.')</script>");
+				}
 			}
 		}
+		response.sendRedirect("main.jsp");
 	%>
 </body>
 </html>

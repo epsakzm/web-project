@@ -11,12 +11,12 @@ public class BoardDAO {
 
 	private Connection conn;
 	private ResultSet rs;
-
+	
 	public BoardDAO() {
 		try {
-			String dbID = "[root]";
+			String dbID = "[id]";
 			String dbPassword = "[password]";
-			String dbURL = "jdbc:mysql://localhost:3306/[DB]?serverTimezone=UTC";
+			String dbURL = "jdbc:mysql://localhost:3306/board?serverTimezone=UTC";
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
@@ -54,7 +54,7 @@ public class BoardDAO {
 	}
 
 	public int write(String boardTitle, String userID, String boardContent) {
-		String SQL = "insert into board values (?, ?, ?, ?, ?, ?)";
+		String SQL = "insert into board values (?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getNextPage());
@@ -63,6 +63,7 @@ public class BoardDAO {
 			pstmt.setString(4, getDate());
 			pstmt.setString(5, boardContent);
 			pstmt.setInt(6, 1);
+			pstmt.setInt(7, 0);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

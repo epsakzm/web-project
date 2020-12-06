@@ -14,6 +14,6 @@ create table if not exists user(
 	userPassword varchar(20),
 	userName varchar(20),
 	userGender varchar(20),
-	userEmail varchar(20)
-	address varchar(20)
+	userEmail varchar(40)
+	address varchar(40)
 ) default charset=utf8;

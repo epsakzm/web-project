@@ -38,6 +38,11 @@
 		PrintWriter script = response.getWriter();
 		if (session.getAttribute("userID") != null) {
 			userID = (String) session.getAttribute("userID");
+		} else {
+			script.println("<script>");
+			script.println("alert('권한이 없습니다.')");
+			script.println("location.href='board.jsp'");
+			script.println("</script>");
 		}
 		int boardID = -1;
 		if (request.getParameter("boardID") != null) {
@@ -54,12 +59,6 @@
 		if (userID == null) {
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다.')");
-			script.println("location.href='board.jsp'");
-			script.println("</script>");
-		}
-		if (!userID.equals(board.getUserID())) {
-			script.println("<script>");
-			script.println("alert('권한이 없습니다.')");
 			script.println("location.href='board.jsp'");
 			script.println("</script>");
 		}

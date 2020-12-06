@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/custom.css">
-<title>Insert title here</title>
+<title>게시판</title>
 <style type="text/css">
 a, a:hover {
 	color: #000000;
@@ -24,7 +24,7 @@ a, a:hover {
 			userID = (String) session.getAttribute("userID");
 		}
 		int pageNumber = 1;
-		if (request.getParameter("pageNumber") != null) {
+		if (request.getParameter("pageNumber") != null && request.getParameter("pageNumber") != "") {
 			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		}
 	%>
@@ -63,13 +63,13 @@ a, a:hover {
 			<%
 				if (pageNumber != 1) {
 			%>
-			<a href="board.jsp?pageNumber="
+			<a href="board.jsp?pageNumber=
 				<%=pageNumber - 1%>" class="btn btn-outline-dark btn-arrow-left">이전</a>
 			<%
 				}
 				if (boardDAO.hasNextPage(pageNumber + 1)) {
 			%>
-			<a href="board.jsp?pageNumber="
+			<a href="board.jsp?pageNumber=
 				<%=pageNumber + 1%>" class="btn btn-outline-dark btn-arrow-right">다음</a>
 			<%
 				}
@@ -83,6 +83,7 @@ a, a:hover {
 			%>
 		</div>
 	</div>
+	
 	<script type="text/javascript"
 		src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
