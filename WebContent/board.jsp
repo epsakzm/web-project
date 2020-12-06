@@ -38,7 +38,8 @@ a, a:hover {
 						<th style="background-color: #eeeeee; text-align: center;">번호</th>
 						<th style="background-color: #eeeeee; text-align: center;">제목</th>
 						<th style="background-color: #eeeeee; text-align: center;">작성자</th>
-						<th style="background-color: #eeeeee; text-align: center;">작성일</th>
+						<th style="background-color: #eeeeee; text-align: center;">작성 일자</th>
+						<th style="background-color: #eeeeee; text-align: center;">조회 수</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -52,6 +53,7 @@ a, a:hover {
 						<td><a href="view.jsp?boardID=<%=list.get(i).getBoardID()%>"><%=list.get(i).getBoardTitle()%></a></td>
 						<td><%=list.get(i).getUserID()%></td>
 						<td><%=list.get(i).getCreatedDate()%></td>
+						<td><%=list.get(i).getViews() %></td>
 					</tr>
 					<%
 						}

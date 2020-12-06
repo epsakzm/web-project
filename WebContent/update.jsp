@@ -39,7 +39,7 @@
 			script.println("location.href='board.jsp'");
 			script.println("</script>");
 		}
-		Board board = new BoardDAO().getBbs(boardID);
+		Board board = new BoardDAO().getBoardById(boardID);
 		if(!userID.equals(board.getUserID())) {
 			script.println("<script>");
 			script.println("alert('권한이 없습니다.')");

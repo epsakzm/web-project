@@ -4,52 +4,78 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/custom.css">
-<title>메인페이지</title>
-
+<link href="css/bootstrap.css" rel="stylesheet">
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  
+  <!-- Template Main CSS File -->
+<title>MY BLOG</title>
 </head>
 <body>
 	<jsp:include page="./navbar.jsp"></jsp:include>
-		<!-- Button trigger modal -->
-
 	<div class="container">
 		<div class="jumbotron">
 			<div class="container">
-				<h1>웹 사이트 소개</h1>
-				<p>asdjfjsfkjsakldfwaejfealjkfweljkfaweljaewlfjjefwweflkj</p>
-				<p><a class="btn btn-primary btn-pull" href="#" role="button">자세히 알아보기</a></p>
+				<h2>개인 블로그</h2>
+				<p><a class="label label-default" href="board.jsp" role="button">글 쓰러 가기!</a></p>
 			</div>
 		</div>
 	</div>
-	<div class="container">
-		<div id="myCarousel" class="carousel slide" data-ride="carousel">
-			<ol class="carousel-indicators">
-				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-				<li data-target="#myCarousel" data-slide-to="1"></li>
-				<li data-target="#myCarousel" data-slide-to="2"></li>
-			</ol>
-			<div class="carousel-inner">
-				<div class="item active">
-					<img alt="x" src="images/image1.jpg">
-				</div>
-				<div class="item">
-					<img alt="x" src="images/image2.jpg">
-				</div>
-				<div class="item">
-					<img alt="x" src="images/image3.jpg">
-				</div>
-			</div>
-			<a class="left carousel-control" href="#myCarousel" data-slide="prev">
-				<span class="glyphicon glyphicon-chevron-left"></span>
-			</a>
-			<a class="right carousel-control" href="#myCarousel" data-slide="next">
-				<span class="glyphicon glyphicon-chevron-right"></span>
-			</a>
-		</div>
-	</div>
-	<script type="text/javascript"
-		src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<main id="main">
+
+    <section class="breadcrumbs">
+      <div class="container">
+
+
+      </div>
+    </section>
+
+    <section class="portfolio-details">
+      <div class="container">
+
+        <div class="portfolio-details-container">
+
+          <div class="owl-carousel portfolio-details-carousel">
+            <img src="assets/img/portfolio/portfolio-details-1.jpg" class="img-fluid" alt="">
+            <img src="assets/img/portfolio/portfolio-details-2.jpg" class="img-fluid" alt="">
+            <img src="assets/img/portfolio/portfolio-details-3.jpg" class="img-fluid" alt="">
+          </div>
+
+          <div class="portfolio-info">
+            <h3>Project information</h3>
+            <ul>
+              <li><strong>Category</strong>: Web design</li>
+              <li><strong>Client</strong>: ASU Company</li>
+              <li><strong>Project date</strong>: 01 March, 2020</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="portfolio-description">
+          <h2>This is an example of portfolio detail</h2>
+          <p>
+            test
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/venobox/venobox.min.js"></script>
+  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+
+  <script src="assets/js/main.js"></script>
 </body>
 </html>

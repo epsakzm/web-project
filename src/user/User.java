@@ -8,7 +8,14 @@ public class User {
 	private String userGender;
 	private String userEmail;
 	private String fileName;
+	private String userAddress;
 	
+	public String getUserAddress() {
+		return userAddress;
+	}
+	public void setUserAddress(String userAddress) {
+		this.userAddress = userAddress;
+	}
 	public String getUserID() {
 		return userID;
 	}

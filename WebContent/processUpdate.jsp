@@ -34,7 +34,7 @@
 			script.println("location.href='board.jsp'");
 			script.println("</script>");
 		}
-		Board board = new BoardDAO().getBbs(boardID);
+		Board board = new BoardDAO().getBoardById(boardID);
 		if (!userID.equals(board.getUserID())) {
 			script.println("<script>");
 			script.println("alert('권한이 없습니다!')");
@@ -43,16 +43,16 @@
 		} else {
 
 			int result = boardDAO.update(boardID, request.getParameter("boardTitle"),
-					request.getParameter("boardContent"));
+			request.getParameter("boardContent"));
 			if (result == -1) {
-				script.println("<script>");
-				script.println("alert('글 수정에 실패했습니다!')");
-				script.println("history.back()");
-				script.println("</script>");
+		script.println("<script>");
+		script.println("alert('글 수정에 실패했습니다!')");
+		script.println("history.back()");
+		script.println("</script>");
 			} else {
-				script.println("<script>");
-				script.println("location.href = 'board.jsp'");
-				script.println("</script>");
+		script.println("<script>");
+		script.println("location.href = 'board.jsp'");
+		script.println("</script>");
 			}
 		}
 	%>

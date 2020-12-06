@@ -42,6 +42,7 @@
 		int boardID = -1;
 		if (request.getParameter("boardID") != null) {
 			boardID = Integer.parseInt(request.getParameter("boardID"));
+			new BoardDAO().addViewCount(boardID);
 		}
 		if (boardID == -1) {
 			script.println("<script>");
@@ -49,8 +50,7 @@
 			script.println("location.href='board.jsp'");
 			script.println("</script>");
 		}
-		Board board = new BoardDAO().getBbs(boardID);
-		System.out.println(">>>>>>>>>>>>" + userID + " / " + board.getUserID());
+		Board board = new BoardDAO().getBoardById(boardID);
 		if (userID == null) {
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다.')");
@@ -67,8 +67,7 @@
 	<jsp:include page="navbar.jsp"></jsp:include>
 	<div class="container">
 		<div class="row">
-			<table class="table table-striped"
-				style="text-align: center; border: 1px solid #dddddd">
+			<table class="table table-striped" style="border: 1px solid #dddddd">
 				<thead>
 					<tr>
 						<th colspan="3"
@@ -77,8 +76,12 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td style="width: 20%;">글 제목</td>
+						<td>글 제목</td>
 						<td colspan="2"><%=board.getBoardTitle()%></td>
+					</tr>
+					<tr>
+						<td>조회 수</td>
+						<td colspan="2"><%=board.getViews()%></td>
 					</tr>
 					<tr>
 						<td>작성자</td>
@@ -94,15 +97,15 @@
 					</tr>
 				</tbody>
 			</table>
-			<a href="board.jsp" class="btn btn-primary">목록</a>
+			<a href="board.jsp" class="btn btn-dark">목록</a>
 			<%
 				if (userID != null && userID.equals(board.getUserID())) {
 			%>
-			<button class="btn btn-black" data-toggle="modal"
+			<button class="btn btn-outline-dark" data-toggle="modal"
 				data-target="#myModal1">수정</button>
 			<a onclick="return confirm('정말로 삭제하시겠습니까?')"
 				href="processDelete.jsp?boardID=<%=boardID%>"
-				class="btn btn-primary">삭제</a>
+				class="btn btn-outline-dark">삭제</a>
 			<%
 				}
 			%>
@@ -115,7 +118,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 
-					<h4 class="modal-title" id="myModalLabel">Modal 1</h4>
+					<h4 class="modal-title" id="myModalLabel">글 수정</h4>
 				</div>
 				<div class="modal-body">
 					<form name="form1"
@@ -124,6 +127,11 @@
 							<label for="title">제목</label> <input id="title1"
 								value="<%=board.getBoardTitle()%>" type="text"
 								class="form-control" name="boardTitle" placeholder="title">
+						</div>
+						<div class="form-group">
+							<label for="viewCount">조회 수</label> <input id="title1"
+								value="<%=board.getViews()%>" type="text"
+								class="form-control" placeholder="title" readonly>
 						</div>
 						<div class="form-group">
 							<label for="user">작성자</label> <input id="user"

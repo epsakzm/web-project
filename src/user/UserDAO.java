@@ -10,7 +10,8 @@ public class UserDAO {
 	private Connection con;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
-
+	private final String defaultLocation = "SEOUL, KR";
+	
 	public UserDAO() {
 		try {
 			String dbURL = "jdbc:mysql://localhost:3306/board?serverTimezone=UTC";
@@ -44,7 +45,7 @@ public class UserDAO {
 	}
 	
 	public int join(User user) {
-		String SQL = "INSERT INTO USER VALUES (?, ?, ?, ?, ?)";
+		String SQL = "INSERT INTO USER VALUES (?, ?, ?, ?, ?, ?)";
 		try {
 			pstmt = con.prepareStatement(SQL);
 			pstmt.setString(1, user.getUserID());
@@ -52,10 +53,32 @@ public class UserDAO {
 			pstmt.setString(3, user.getUserName());
 			pstmt.setString(4, user.getUserGender());
 			pstmt.setString(5, user.getUserEmail());
+			pstmt.setString(6, defaultLocation);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();;
 		}
 		return -1;
+	}
+	
+	public User findUserById(String userID) {
+		User user = new User();
+		String SQL = "select * from user where userID = ?";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				user.setUserID(rs.getString(1));
+				user.setUserName(rs.getString(3));
+				user.setUserGender(rs.getString(4));
+				user.setUserEmail(rs.getString(5));
+				user.setUserAddress(rs.getString(6));
+				return user;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

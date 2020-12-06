@@ -8,6 +8,7 @@ public class Board {
 	private String createdDate;
 	private String boardContent;
 	private int isAvailable;
+	private int views;
 	
 	public int getBoardID() {
 		return boardId;
@@ -45,6 +46,10 @@ public class Board {
 	public void setIsAvailable(int isAvailable) {
 		this.isAvailable = isAvailable;
 	}
-	
-	
+	public int getViews() {
+		return views;
+	}
+	public void setViews(int views) {
+		this.views = views;
+	}
 }

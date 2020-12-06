@@ -10,6 +10,11 @@ a:hover {
 	color: #c7e8f0;
 }
 
+img {
+	max-width: 80%;
+	max-height: 80%;
+}
+
 .btn-outline-dark {
 	color: #343a40;
 	border-color: #343a40

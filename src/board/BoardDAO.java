@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class BoardDAO {
@@ -84,6 +85,7 @@ public class BoardDAO {
 				board.setCreatedDate(rs.getString(4));
 				board.setBoardContent(rs.getString(5));
 				board.setIsAvailable(rs.getInt(6));
+				board.setViews(rs.getInt(7));
 				list.add(board);
 			}
 		} catch (Exception e) {
@@ -107,7 +109,7 @@ public class BoardDAO {
 		return false;
 	}
 
-	public Board getBbs(int id) {
+	public Board getBoardById(int id) {
 		String SQL = "select * from board where boardID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -121,6 +123,7 @@ public class BoardDAO {
 				board.setCreatedDate(rs.getString(4));
 				board.setBoardContent(rs.getString(5));
 				board.setIsAvailable(rs.getInt(6));
+				board.setViews(rs.getInt(7));
 				return board;
 			}
 		} catch (Exception e) {
@@ -153,5 +156,31 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+	public int getViewCount(int boardID) {
+		String SQL = "select views from board where boardID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1,  boardID);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public void addViewCount(int boardID) {
+		String SQL = "update board set views = ? where boardId = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, getViewCount(boardID) + 1);
+			pstmt.setInt(2, boardID);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
