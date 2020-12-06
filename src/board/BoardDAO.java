@@ -14,9 +14,9 @@ public class BoardDAO {
 
 	public BoardDAO() {
 		try {
-			String dbID = "root";
-			String dbPassword = "hwpark";
-			String dbURL = "jdbc:mysql://localhost:3306/board?serverTimezone=UTC";
+			String dbID = "[root]";
+			String dbPassword = "[password]";
+			String dbURL = "jdbc:mysql://localhost:3306/[DB]?serverTimezone=UTC";
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
