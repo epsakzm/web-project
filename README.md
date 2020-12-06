@@ -6,7 +6,6 @@ git clone https://github.com/epsakzm/web-project
 ```
 1. db생성 테이블생성
 ```
-```
 //db 생성
 create database board;
 ```
