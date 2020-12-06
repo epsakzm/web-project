@@ -6,8 +6,11 @@ git clone https://github.com/epsakzm/web-project
 ```
 1. db생성 테이블생성
 ```
+```
 //db 생성
 create database board;
+```
+```
 //user table
 create table if not exists user(
 	userID varchar(20) not null,
@@ -17,8 +20,9 @@ create table if not exists user(
 	userEmail varchar(40)
 	address varchar(40)
 ) default charset=utf8;
-//board table
 ```
+```
+//board table
 create table if not exists user(
 	userID varchar(20) not null,
 	userPassword varchar(20),
