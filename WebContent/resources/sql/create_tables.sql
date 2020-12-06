@@ -5,6 +5,7 @@ create table if not exists board (
 	createdDate datetime,
 	boardContent varchar(4096),
 	isAvailable int,
+	views long,
 	primary key(boardID)
 ) default charset=utf8;
 
@@ -14,4 +15,5 @@ create table if not exists user(
 	userName varchar(20),
 	userGender varchar(20),
 	userEmail varchar(20)
+	address varchar(20)
 ) default charset=utf8;
